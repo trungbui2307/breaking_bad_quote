@@ -60,6 +60,34 @@ stages:
       displayName: 'Upload package'
       artifact: drop
 
+- stage: Test
+  displayName: 'Test Web App'
+  dependsOn: Build
+  condition: succeeded()
+  jobs:
+  - deployment: DeploymentJob
+    pool:
+      vmImage: $(vmImageName)
+    environment: $(environmentName)
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - task: UsePythonVersion@0
+            inputs:
+              versionSpec: '3.8'
+              addToPath: true
+
+          - script: pip install pipenv
+            displayName: 'Install Dependencies'
+
+          - script: pipenv install --dev
+            displayName: 'Install Project Dependencies'
+
+          - script: pipenv run nosetests
+            displayName: 'Run Tests'
+
+
 - stage: Deploy
   displayName: 'Deploy Web App'
   dependsOn: Build
