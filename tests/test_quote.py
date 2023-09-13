@@ -1,12 +1,12 @@
 # tests/test_wsgi.py
 from flask_testing import TestCase
-from application import application
+from application import app
 
 
 class TestViews(TestCase):
     def create_app(self):
-        application.config['TESTING'] = True
-        return application
+        app.config['TESTING'] = True
+        return app
 
 
     # A basic unit test to check that the /quote method returns a non empty string
