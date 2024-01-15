@@ -4,5 +4,5 @@ import requests
 def breaking_quote():
     url = "https://wagon-breaking-bad-quotes.herokuapp.com/v1/quotes"
     call = requests.get(url).json()[0]
-    response = f"{call['author']} says : {call['quote']}"
+    response = f"{call['author']} says : {call['quote']}!"
     return response
