@@ -28,7 +28,10 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
     steps:
-    - name: Deploy to Azure
-      id: deploy_to_azure
-      run: az webapp up --runtime PYTHON:3.8 --sku free --name trungbui2307 --resource-group trungbui2307 --location francecentral --os-type Linux
-        
+    - name: 'Deploy to Azure Web App'
+      uses: azure/webapps-deploy@v2
+      id: deploy-to-webapp
+      with:
+        app-name: 'trungbui2307'
+        slot-name: 'Production'
+        publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_856876C6E205425DB53586300F55DCBB }}
